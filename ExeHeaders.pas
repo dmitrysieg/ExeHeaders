@@ -32,6 +32,10 @@ function GetPImageExportDirectory(hModule: HMODULE): PImageExportDirectory;
 implementation
 {******************************************************************************}
 
+{
+   Get PImageExportDirectory from loaded module (e.g. DLL loaded by LoadLibrary).
+   Return PImageExportDirectory structure.
+}
 function GetPImageExportDirectory(hModule: HMODULE): PImageExportDirectory;
 var
    nt: PImageNTHeaders;
@@ -40,6 +44,10 @@ begin
    GetPImageExportDirectory := PImageExportDirectory(pointer(hmodule + nt.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress));
 end;
 
+{
+   Get DLL export names from loaded module (e.g. DLL loaded by LoadLibrary).
+   Return array of DLL export names strings.
+}
 function GetDLLExportNames(hModule: HMODULE): DString;
 var
    exp: PImageExportDirectory;
