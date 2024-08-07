@@ -1,5 +1,20 @@
 unit ExeHeaders;
 
+{  ***
+
+   Written by dmitrysieg in 2022.
+   While working on Bube project, for research & debug purposes.
+
+   Windows module already contains a part of functionality for working with .exe headers.
+
+   See in Windows.pas:
+      PImageDosHeader
+      PImageFileHeader
+      PImageExportDirectory
+      and further...
+   ***
+}
+
 {******************************************************************************}
 interface
 {******************************************************************************}
