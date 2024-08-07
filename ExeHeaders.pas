@@ -40,8 +40,8 @@ function GetPImageExportDirectory(hModule: HMODULE): PImageExportDirectory;
 var
    nt: PImageNTHeaders;
 begin
-   nt := PImageNTHeaders(pointer(hmodule + PImageDosHeader(pointer(hmodule))^._lfanew));
-   GetPImageExportDirectory := PImageExportDirectory(pointer(hmodule + nt.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress));
+   nt := PImageNTHeaders(hmodule + PImageDosHeader(hmodule)^._lfanew);
+   GetPImageExportDirectory := PImageExportDirectory(hmodule + nt.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
 end;
 
 {
@@ -50,18 +50,15 @@ end;
 }
 function GetDLLExportNames(hModule: HMODULE): DString;
 var
-   exp: PImageExportDirectory;
-   addressOfNames: Pointer;
-   numberOfNames, i: Integer;
+   IED: PImageExportDirectory;
+   i: Integer;
 begin
-   exp := GetPImageExportDirectory(hModule);
-   numberOfNames := exp.NumberOfNames;
-   addressOfNames := exp.AddressOfNames;
+   IED := GetPImageExportDirectory(hModule);
 
-   setLength(result, numberOfNames);
-   for i := 0 to numberOfNames - 1 do begin
-      result[i] := PChar(
-         hmodule + dword(pointer(hmodule + dword(addressofnames) + i * 4)^)
+   SetLength(result, IED.NumberOfNames);
+   for i := 0 to IED.NumberOfNames - 1 do begin
+      Result[i] := PChar(
+         hModule + DWORD(pointer(hModule + DWORD(IED.AddressOfNames) + i * 4)^)
       );
    end;
 end;
