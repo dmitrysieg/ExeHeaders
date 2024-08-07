@@ -8,7 +8,7 @@ uses
 
 function HModuleToString(hModule: HMODULE): String;
 begin
-   Result := Result + 'HMODULE: ' + SysUtils.IntToStr(hModule) + #10 + #13;
+   Result := Result + 'HMODULE: ' + SysUtils.IntToStr(hModule) + sLineBreak;
 end;
 
 function FormatEpoch(Timestamp: LongWord): String;
@@ -23,17 +23,17 @@ function ImageExportDirectoryToString(ImageExportDirectory: PImageExportDirector
 var
    DLLName: PString;
 begin
-   Result := Result + 'Export Flags: ' + SysUtils.IntToStr(ImageExportDirectory.Characteristics) + #10 + #13;
-   Result := Result + 'Time/Date Stamp: ' + FormatEpoch(ImageExportDirectory.TimeDateStamp) + #10 + #13;
-   Result := Result + 'Major version: ' + SysUtils.IntToStr(ImageExportDirectory.MajorVersion) + #10 + #13;
-   Result := Result + 'Minor version: ' + SysUtils.IntToStr(ImageExportDirectory.MinorVersion) + #10 + #13;
+   Result := Result + 'Export Flags: ' + SysUtils.IntToStr(ImageExportDirectory.Characteristics) + sLineBreak;
+   Result := Result + 'Time/Date Stamp: ' + FormatEpoch(ImageExportDirectory.TimeDateStamp) + sLineBreak;
+   Result := Result + 'Major version: ' + SysUtils.IntToStr(ImageExportDirectory.MajorVersion) + sLineBreak;
+   Result := Result + 'Minor version: ' + SysUtils.IntToStr(ImageExportDirectory.MinorVersion) + sLineBreak;
 
    DLLName := PString(hmodule + ImageExportDirectory.Name);
-   Result := Result + 'Name: ' + PAnsiChar(DLLName) + #10 + #13;
+   Result := Result + 'Name: ' + PAnsiChar(DLLName) + sLineBreak;
 
-   Result := Result + 'Ordinal Base: ' + SysUtils.IntToStr(ImageExportDirectory.Base) + #10 + #13;
-   Result := Result + 'Address Table Entries: ' + SysUtils.IntToStr(ImageExportDirectory.NumberOfFunctions) + #10 + #13;
-   Result := Result + 'Number of Name Pointers: ' + SysUtils.IntToStr(ImageExportDirectory.NumberOfNames) + #10 + #13;
+   Result := Result + 'Ordinal Base: ' + SysUtils.IntToStr(ImageExportDirectory.Base) + sLineBreak;
+   Result := Result + 'Address Table Entries: ' + SysUtils.IntToStr(ImageExportDirectory.NumberOfFunctions) + sLineBreak;
+   Result := Result + 'Number of Name Pointers: ' + SysUtils.IntToStr(ImageExportDirectory.NumberOfNames) + sLineBreak;
 end;
 
 function DLLExportNamesToString(DLLExportNames: DString): String;
@@ -41,7 +41,7 @@ var
    i: Integer;
 begin
    for i := 0 to Length(DLLExportNames) - 1 do begin
-      Result := Result + DLLExportNames[i] + #10 + #13;
+      Result := Result + DLLExportNames[i] + sLineBreak;
    end;
 end;
 
